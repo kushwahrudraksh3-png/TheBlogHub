@@ -59,13 +59,15 @@ def login(request):
         if form.is_valid():
             user = form.get_user()
             auth_login(request, user)
-            return redirect('home')
+            return redirect('dashboard')
     else:
         form = AuthenticationForm()
 
     context = {
         'form': form,
     }
+    
+    print(request.user.username)
     return render(request, 'login.html', context)
 
 
