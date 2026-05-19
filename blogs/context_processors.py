@@ -7,6 +7,7 @@ def get_categories(request):
     return dict(categories=categories)
 
 
+
 def get_links(request):
     links = Links.objects.all()
     return dict(links=links)
