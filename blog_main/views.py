@@ -37,7 +37,7 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('register')
+            return redirect('login')
         else:
             print(form.errors)
     else:
@@ -59,7 +59,10 @@ def login(request):
         if form.is_valid():
             user = form.get_user()
             auth_login(request, user)
-            return redirect('dashboard')
+            if user.is_staff:
+                return redirect('dashboard')
+            else:
+                return redirect('home')
     else:
         form = AuthenticationForm()
 
