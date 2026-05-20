@@ -9,7 +9,7 @@ __pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-media
+
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
@@ -172,3 +172,16 @@ cython_debug/
 #.idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/django
+
+
+# Static collected files
+staticfiles/
+
+# VS Code
+.vscode/
+
+# PythonAnywhere
+*.sock
+
+# Mac files
+.DS_Store
