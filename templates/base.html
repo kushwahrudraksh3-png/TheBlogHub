@@ -153,9 +153,11 @@
 
           {% else %}
 
-            <a class="btn btn-warning btn-sm" href="{% url 'dashboard' %}">
-              Dashboard
-            </a>
+            {% if user.is_superuser or user.is_staff %}
+              <a class="btn btn-warning btn-sm" href="{% url 'dashboard' %}">
+                Dashboard
+              </a>
+            {% endif %}
 
             <a class="btn btn-danger btn-sm" href="{% url 'logout' %}">
               Logout
