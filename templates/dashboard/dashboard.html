@@ -2,39 +2,73 @@
 
 {% block content %}
 
+<style>
+  .sidebar-menu {
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .sidebar-menu .nav-link {
+    padding: 12px 15px;
+    font-size: 16px;
+  }
+
+  .dashboard-card {
+    min-height: 150px;
+  }
+
+  .dashboard-card .card-header {
+    font-size: 16px;
+  }
+
+  .dashboard-card .card-title {
+    font-size: 28px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar-menu {
+      margin-bottom: 20px;
+    }
+
+    .dashboard-card {
+      margin-bottom: 15px;
+    }
+  }
+</style>
+
 <div class="row">
-    
-    <!-- load sidebar here -->
 
-    {% include "dashboard/sidebar.html" %}
+  {% include "dashboard/sidebar.html" %}
 
-    <!-- right side content -->
-     <div class="col-md-9">
-        <div class="row">
+  <div class="col-12 col-md-9">
+    <div class="row">
 
-
-            <div class="col">
-                <div class="card border-default mb-3">
-                    <div class="card-header text-center text-uppercase font-weight-bold">All Categories</div>
-                    <div class="card-body text-dark">
-                        <h5 class="card-title text-center">{{category_count}}</h5>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col">
-                <div class="card border-default mb-3">
-                    <div class="card-header text-center text-uppercase font-weight-bold">All Posts</div>
-                    <div class="card-body text-dark">
-                        <h5 class="card-title text-center">{{blogs_count}}</h5>
-                    </div>
-                </div>
-            </div>
-
-
+      <div class="col-12 col-sm-6 mb-3">
+        <div class="card border-default dashboard-card">
+          <div class="card-header text-center text-uppercase font-weight-bold">
+            All Categories
+          </div>
+          <div class="card-body text-dark">
+            <h5 class="card-title text-center">{{ category_count }}</h5>
+          </div>
         </div>
-     </div>
+      </div>
+
+      <div class="col-12 col-sm-6 mb-3">
+        <div class="card border-default dashboard-card">
+          <div class="card-header text-center text-uppercase font-weight-bold">
+            All Posts
+          </div>
+          <div class="card-body text-dark">
+            <h5 class="card-title text-center">{{ blogs_count }}</h5>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 {% endblock content %}
