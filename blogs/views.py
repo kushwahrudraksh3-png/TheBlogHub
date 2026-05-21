@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def post_by_category(request, category_id):
@@ -36,6 +36,16 @@ def post_by_category(request, category_id):
 def blogs(request, slug):
     single_blog = get_object_or_404(Blog, slug=slug, status= 'Published')
     
+    liked = False
+    saved = False
+
+    if request.user.is_authenticated:
+        liked = BlogLike.objects.filter(user=request.user, blog=single_blog).exists()
+        saved = BlogSave.objects.filter(user=request.user, blog=single_blog).exists()
+
+    like_count = BlogLike.objects.filter(blog=single_blog).count()  
+    save_count = BlogSave.objects.filter(blog=single_blog).count()
+    
     if request.method == "POST":
         comment = Comment()
         comment.user = request.user
@@ -53,7 +63,11 @@ def blogs(request, slug):
     context = {
         'single_blog': single_blog,
         'comments':comments,
-        'comment_count' : comment_count
+        'comment_count' : comment_count,
+        'liked': liked,
+        'saved': saved,
+        'like_count': like_count,
+        'save_count': save_count,
     }
     
     return render(request, 'blogs.html' , context )
@@ -72,3 +86,30 @@ def search(request):
     return render(request, 'search.html', context)
 
 
+
+@login_required(login_url='login')
+def like_blog(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
+
+    like = BlogLike.objects.filter(user=request.user, blog=blog)
+
+    if like.exists():
+        like.delete()
+    else:
+        BlogLike.objects.create(user=request.user, blog=blog)
+
+    return redirect('blogs', slug=slug)
+
+
+@login_required(login_url='login')
+def save_blog(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
+
+    save = BlogSave.objects.filter(user=request.user, blog=blog)
+
+    if save.exists():
+        save.delete()
+    else:
+        BlogSave.objects.create(user=request.user, blog=blog)
+
+    return redirect('blogs', slug=slug)

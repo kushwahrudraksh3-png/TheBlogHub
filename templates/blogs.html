@@ -2,227 +2,263 @@
 
 {% block content %}
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!DOCTYPE html>
-<html lang="en">
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Single Blog Page</title>
+    a {
+        text-decoration: none;
+    }
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    a:hover {
+        text-decoration: underline;
+    }
 
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+    .blog-container {
+        margin-top: 60px;
+    }
 
-        a {
-            text-decoration: none;
-        }
+    .blog-title {
+        font-size: 55px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #111;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    .blog-meta {
+        color: gray;
+        margin-bottom: 20px;
+    }
 
-        .blog-container {
-            margin-top: 60px;
-        }
+    .category-badge {
+        display: inline-block;
+        background-color: #0d6efd;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
 
+    .featured-image {
+        width: 100%;
+        height: 450px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+
+    .blog-content {
+        font-size: 18px;
+        line-height: 1.9;
+        color: #333;
+    }
+
+    .action-icons {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        margin: 20px 0;
+    }
+
+    .action-box {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .action-box a:hover {
+        text-decoration: none;
+    }
+
+    .action-box i {
+        font-size: 26px;
+        cursor: pointer;
+    }
+
+    .action-count {
+        font-size: 17px;
+        color: #333;
+        font-weight: 500;
+    }
+
+    .sidebar-card {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar-title {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #111;
+    }
+
+    .category-links a {
+        display: block;
+        color: #0d6efd;
+        margin-bottom: 10px;
+        transition: 0.3s;
+    }
+
+    .category-links a:hover {
+        padding-left: 5px;
+    }
+
+    @media(max-width:768px) {
         .blog-title {
-            font-size: 55px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #111;
-        }
-
-        .blog-meta {
-            color: gray;
-            margin-bottom: 20px;
-        }
-
-        .category-badge {
-            display: inline-block;
-            background-color: #0d6efd;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 5px;
-            font-size: 14px;
-            margin-bottom: 25px;
+            font-size: 38px;
         }
 
         .featured-image {
-            width: 100%;
-            height: 450px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 30px;
+            height: 300px;
         }
+    }
+</style>
 
-        .blog-content {
-            font-size: 18px;
-            line-height: 1.9;
-            color: #333;
-        }
+<div class="container blog-container">
 
-        .sidebar-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-        }
+    <div class="row">
 
-        .sidebar-title {
-            font-size: 30px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #111;
-        }
+        <!-- BLOG SECTION -->
 
-        .category-links a {
-            display: block;
-            color: #0d6efd;
-            margin-bottom: 10px;
-            transition: 0.3s;
-        }
+        <div class="col-lg-8">
 
-        .category-links a:hover {
-            padding-left: 5px;
-        }
+            <h1 class="blog-title">
+                {{single_blog.title}}
+            </h1>
 
-        @media(max-width:768px) {
+            <p class="blog-meta">
+                Posted on {{single_blog.created_at}} by {{single_blog.author}}
+            </p>
 
-            .blog-title {
-                font-size: 38px;
-            }
+            <span class="category-badge">
+                {{single_blog.category}}
+            </span>
 
-            .featured-image {
-                height: 300px;
-            }
-        }
-    </style>
+            <img src="{{single_blog.featured_image.url}}" class="featured-image" alt="">
 
-</head>
+            <div class="blog-content">
 
-<body>
-
-    <div class="container blog-container">
-
-        <div class="row">
-
-            <!-- BLOG SECTION -->
-
-            <div class="col-lg-8">
-
-                <h1 class="blog-title">
-                    {{single_blog.title}}
-                </h1>
-
-                <p class="blog-meta">
-                    Posted on {{single_blog.created_at}} by {{single_blog.author}}
+                <p>
+                    {{single_blog.short_description}}
                 </p>
 
-                <span class="category-badge">
-                    {{single_blog.category}}
-                </span>
+                <p>
+                    {{single_blog.blog_body}}
+                </p>
 
-                <img src="{{single_blog.featured_image.url}}"
-                    class="featured-image" alt="">
+                <!-- LIKE AND SAVE ICONS START -->
 
-                <div class="blog-content">
+                <div class="action-icons">
 
-                    <p>
-                        {{single_blog.short_description}}
-                    </p>
-                   
-                    <p>
-                        {{single_blog.blog_body}}
-                    </p>
-                    <h4>Comments({{comment_count}})</h4>
-                    {% if comments %}
-                    
-                    {% for comment in comments %}
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="card-text mb-0">{{ comment }}</p>
-                                <span>
-                                <small style="font-size: 0.9rem;">By {{comment.user}}</small>
-                                <small style="font-size: 0.9rem;">{{comment.created_at | timesince}}</small>
-                                </span>
-                            </div>
-                        </div>
-                    {% endfor %}
+                    <div class="action-box">
+                        <a href="{% url 'like_blog' single_blog.slug %}">
+                            {% if liked %}
+                                <i class="fa-solid fa-heart text-danger"></i>
+                            {% else %}
+                                <i class="fa-regular fa-heart text-dark"></i>
+                            {% endif %}
+                        </a>
+                        <span class="action-count">{{like_count}}</span>
+                    </div>
 
-                    {% else %}
-                    No comments yet
-                    {% endif %}
-
-                    <br>
-                    <div class="form-group">
-                        {% if user.is_authenticated %}  
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <textarea name="comment" class="form-control" placeholder="Write your comment..."></textarea>
-                                <input type="submit" value="submit" class="btn btn-primary mt-2">
-                            </div>
-                        </form>
-                        {% else %}
-                        <p>Please <span><a href="{% url 'login' %}">login</a></span> to write comment !!</p>
-                        {% endif %}
+                    <div class="action-box">
+                        <a href="{% url 'save_blog' single_blog.slug %}">
+                            {% if saved %}
+                                <i class="fa-solid fa-bookmark text-primary"></i>
+                            {% else %}
+                                <i class="fa-regular fa-bookmark text-dark"></i>
+                            {% endif %}
+                        </a>
+                        <!-- <span class="action-count">{{save_count}}</span> -->
                     </div>
 
                 </div>
 
+                <!-- LIKE AND SAVE ICONS END -->
+
+                <h4>Comments({{comment_count}})</h4>
+
+                {% if comments %}
+
+                    {% for comment in comments %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <p class="card-text mb-0">{{ comment }}</p>
+                            <span>
+                                <small style="font-size: 0.9rem;">By {{comment.user}}</small>
+                                <small style="font-size: 0.9rem;">{{comment.created_at | timesince}}</small>
+                            </span>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                {% else %}
+                    No comments yet
+                {% endif %}
+
+                <br>
+
+                <div class="form-group">
+                    {% if user.is_authenticated %}
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <textarea name="comment" class="form-control" placeholder="Write your comment..."></textarea>
+                            <input type="submit" value="submit" class="btn btn-primary mt-2">
+                        </div>
+                    </form>
+                    {% else %}
+                    <p>Please <span><a href="{% url 'login' %}">login</a></span> to write comment !!</p>
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SIDEBAR -->
+
+        <div class="col-lg-4">
+
+            <!-- CATEGORIES -->
+
+            <div class="sidebar-card">
+
+                <h3 class="sidebar-title">
+                    Categories
+                </h3>
+
+                <div class="category-links">
+                    {% for category in categories %}
+                    <a href="{% url 'post_by_category' category.id %}">{{category.category_name}}</a>
+                    {% endfor %}
+                </div>
 
             </div>
 
 
-            <!-- SIDEBAR -->
+            <!-- FOLLOW -->
 
-            <div class="col-lg-4">
+            <div class="sidebar-card">
 
-                <!-- SEARCH -->
+                <h3 class="sidebar-title">
+                    Follow Us
+                </h3>
 
-              
-
-
-                <!-- CATEGORIES -->
-
-                <div class="sidebar-card">
-
-                    <h3 class="sidebar-title">
-                        Categories
-                    </h3>
-
-                    <div class="category-links">
-                        {% for category in categories %}
-                        <a href="{% url 'post_by_category' category.id %}">{{category.category_name}}</a>
-                        {% endfor %}
-
-                    </div>
-
-                </div>
-
-
-                <!-- FOLLOW -->
-
-                <div class="sidebar-card">
-
-                    <h3 class="sidebar-title">
-                        Follow Us
-                    </h3>
-
-                    <div class="category-links">
-                        {% for i in links %}
-                        <a href="{{i.link}}" target="_blank" >{{i.platform}}</a>
-                        {% endfor %}
-
-                    </div>
-
+                <div class="category-links">
+                    {% for i in links %}
+                    <a href="{{i.link}}" target="_blank">{{i.platform}}</a>
+                    {% endfor %}
                 </div>
 
             </div>
@@ -231,9 +267,6 @@
 
     </div>
 
-</body>
-
-</html>
-
+</div>
 
 {% endblock content %}
