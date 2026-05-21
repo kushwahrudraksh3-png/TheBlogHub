@@ -70,6 +70,9 @@ class BlogLike(models.Model):
 
     class Meta:
         unique_together = ('user', 'blog')
+        
+    def __str__(self):
+        return f"{self.user.username} - {self.blog.title}"
 
 
 class BlogSave(models.Model):
@@ -79,3 +82,7 @@ class BlogSave(models.Model):
 
     class Meta:
         unique_together = ('user', 'blog')
+    
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.blog.title}"

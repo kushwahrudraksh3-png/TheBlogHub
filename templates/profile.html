@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <div class="card shadow border-0">
+
+        <div class="card-body p-5">
+
+            <!-- PROFILE TOP -->
+
+            <div class="row align-items-center">
+
+                <div class="col-md-3 text-center">
+                    <i class="fa-solid fa-user-circle text-secondary" style="font-size: 120px;">
+                    </i>
+
+
+                </div>
+
+                <div class="col-md-9">
+
+                    <h2 class="font-weight-bold mb-3">
+                        {{request.user.username}}
+                    </h2>
+
+                    <p class="mb-2">
+                        <strong>Email :</strong>
+                        {{request.user.email}}
+                    </p>
+
+                    <p class="mb-2">
+                        <strong>Date Joined :</strong>
+                        {{request.user.date_joined}}
+                    </p>
+
+                    <p class="mb-3">
+
+                        <strong>Status :</strong>
+
+                        {% if request.user.is_superuser %}
+
+                        Admin
+
+                        {% elif request.user.is_staff %}
+
+                        Staff Member
+
+                        {% else %}
+
+                        Normal User
+
+                        {% endif %}
+
+                    </p>
+
+                    <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-sm mr-2">
+                        Edit Profile
+                    </a>
+
+                    <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">
+                        Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- STATS -->
+
+            <!-- STATS -->
+
+            <div class="row mt-5">
+
+                <div class="col-md-4 mb-3">
+                    <a href="#likedBlogs" class="text-dark" style="text-decoration: none;">
+                        <div class="card text-center border-0 shadow-sm">
+                            <div class="card-body">
+                                <h2 class="font-weight-bold">{{ like_count }}</h2>
+                                <p class="text-muted mb-0">Liked Blogs</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <a href="#savedBlogs" class="text-dark" style="text-decoration: none;">
+                        <div class="card text-center border-0 shadow-sm">
+                            <div class="card-body">
+                                <h2 class="font-weight-bold">{{ save_count }}</h2>
+                                <p class="text-muted mb-0">Saved Blogs</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <a href="#commentsList" class="text-dark" style="text-decoration: none;">
+                        <div class="card text-center border-0 shadow-sm">
+                            <div class="card-body">
+                                <h2 class="font-weight-bold">{{ comment_count }}</h2>
+                                <p class="text-muted mb-0">Comments</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+
+            <!-- LIKED BLOGS LIST -->
+
+            <div id="likedBlogs" class="card shadow-sm border-0 mt-4">
+                <div class="card-header bg-danger text-white">
+                    Liked Blogs
+                </div>
+
+                <div class="card-body">
+
+                    {% if liked_blogs %}
+
+                    {% for item in liked_blogs %}
+                    <p>
+                        <a href="{% url 'blogs' item.blog.slug %}">
+                            {{ item.blog.title }}
+                        </a>
+                    </p>
+                    {% endfor %}
+
+                    {% else %}
+                    <p class="text-muted mb-0">No liked blogs yet.</p>
+                    {% endif %}
+
+                </div>
+            </div>
+
+
+            <!-- SAVED BLOGS LIST -->
+
+            <div id="savedBlogs" class="card shadow-sm border-0 mt-4">
+                <div class="card-header bg-primary text-white">
+                    Saved Blogs
+                </div>
+
+                <div class="card-body">
+
+                    {% if saved_blogs %}
+
+                    {% for item in saved_blogs %}
+                    <p>
+                        <a href="{% url 'blogs' item.blog.slug %}">
+                            {{ item.blog.title }}
+                        </a>
+                    </p>
+                    {% endfor %}
+
+                    {% else %}
+                    <p class="text-muted mb-0">No saved blogs yet.</p>
+                    {% endif %}
+
+                </div>
+            </div>
+
+
+            <!-- COMMENTS LIST -->
+
+            <div id="commentsList" class="card shadow-sm border-0 mt-4">
+                <div class="card-header bg-secondary text-white">
+                    Comments
+                </div>
+
+                <div class="card-body">
+
+                    {% if comments %}
+
+                    {% for comment in comments %}
+                    <p>
+                        <a href="{% url 'blogs' comment.blog.slug %}">
+                            {{ comment.blog.title }}
+                        </a>
+                        <br>
+                        <small class="text-muted">
+                            {{ comment.comment }}
+                        </small>
+                    </p>
+                    {% endfor %}
+
+                    {% else %}
+                    <p class="text-muted mb-0">No comments yet.</p>
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}

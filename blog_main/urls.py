@@ -32,5 +32,11 @@ urlpatterns = [
     path('logout/', views.logout, name="logout"),
     
     #dashboards urls
-    path('dashboard/', include('dashboards.urls'))
+    path('dashboard/', include('dashboards.urls')),
+    
+    # user profile urls
+    path('userprofile/', views.profile , name="profile"),
+    path('userprofile/edit-profile', views.edit_profile , name='edit_profile'),
+    path('userprofile/edit-profile/change-password', views.change_password , name='change_password'),
+    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
